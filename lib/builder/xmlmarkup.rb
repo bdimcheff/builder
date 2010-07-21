@@ -290,7 +290,12 @@ module Builder
     # tag is also the end tag (e.g.  <br/>
     def _start_tag(sym, attrs, end_too=false)
       @target << "<#{sym}"
-      _insert_attributes(attrs)
+      if attrs && attrs.include?(:order) && attrs[:order].is_a?(Array)
+        order = attrs.delete(:order)
+        _insert_attributes(attrs, order)
+      else
+        _insert_attributes(attrs)
+      end
       @target << "/" if end_too
       @target << ">"
     end
