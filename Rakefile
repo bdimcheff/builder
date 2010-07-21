@@ -142,6 +142,11 @@ classes that make heavy use of method_missing.
     Rake::GemPackageTask.new(spec) do |t|
       t.need_tar = true
     end
+    
+    desc "Output the gemspec for builder"
+    task :gemspec do
+      File.open('builder.gemspec', 'w') { |f| f.write spec.to_ruby }
+    end
   end
   
   namespace 'blankslate' do
